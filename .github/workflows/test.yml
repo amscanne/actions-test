@@ -1,12 +1,12 @@
 name: Test
 on:
-  issues:
+  pull_request:
     types: [labeled]
 jobs:
   test:
     runs-on: ubuntu-latest
     name: Test
-    if: github.event.label == 'kokoro: run'
+    if: github.event.label.name == 'kokoro: run'
     steps:
       - name: Add commit comment
         run: |
@@ -14,9 +14,9 @@ jobs:
           curl -sL  -X POST -d @- \
             -H "Content-Type: application/json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "${{ github.event.issue.comments_url }}"
+            "${{ github.event.pull_request.comments_url }}"
       - name: Delete label
         run: |
           curl -sL  -X DELETE \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "${{ github.event.issue.url }}/labels/kokoro:run"
+            "${{ github.event.pull_request.url }}/labels/kokoro:run"
