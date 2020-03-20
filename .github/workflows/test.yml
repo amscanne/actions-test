@@ -19,4 +19,4 @@ jobs:
         run: |
           curl -sL  -X DELETE \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "${{ github.event.pull_request.url }}/labels/kokoro:%20run"
+            "${{ github.event.pull_request.url }}/labels/kokoro: run"
