@@ -1,7 +1,6 @@
 name: 'gVisor build action'
 description: 'Generic gVisor build container'
 inputs:
-  command:
   target:
     description: 'Bazel build command & targets'
     required: false
