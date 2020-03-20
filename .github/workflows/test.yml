@@ -1,6 +1,6 @@
 name: Test
 on:
-  pull_request:
+  issues:
     types: [labeled]
 jobs:
   test:
@@ -14,9 +14,9 @@ jobs:
           curl -sL  -X POST -d @- \
             -H "Content-Type: application/json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "${{ github.event.pull_request.comments_url }}"
+            "${{ github.event.issue.comments_url }}"
       - name: Delete label
         run: |
           curl -sL  -X DELETE \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "${{ github.event.pull_request.issue_url }}/labels/kokoro:%20run"
+            "${{ github.event.issue.url }}/labels/kokoro:%20run"
