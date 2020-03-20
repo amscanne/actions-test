@@ -8,16 +8,14 @@ jobs:
     name: Test
     if: contains(github.event.pull_request.labels.*.name, 'kokoro:run')
     steps:
-      - uses: actions/checkout@v1
-        name: Add commit comment
+      - name: Add commit comment
         run: |
           jq -nc '{"body": "label detected"}' | \
           curl -sL  -X POST -d @- \
             -H "Content-Type: application/json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/comments"
-      - uses: actions/checkout@v1
-        name: Delete label
+      - name: Delete label
         run: |
           curl -sL  -X DELETE \
             -H "Content-Type: application/json" \
