@@ -1,25 +1,22 @@
 name: Test
 on:
-  pull_request:
+  issues:
     types: [labeled]
 jobs:
   test:
     runs-on: ubuntu-latest
     name: Test
-    if: contains(github.event.pull_request.labels.*.name, 'kokoro: run')
+    if: github.event.label == 'kokoro: run'
     steps:
       - name: Add commit comment
-        env:
-          labels: ${{ join(github.event.pull_request.labels.*.name, ',') }}
         run: |
-          jq -nc "{\"body\": \"labels detected: $labels\"}" | \
+          jq -nc '{"body": "label detected"}' | \
           curl -sL  -X POST -d @- \
             -H "Content-Type: application/json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/comments"
+            "${{ github.event.issue.comments_url }}"
       - name: Delete label
         run: |
           curl -sL  -X DELETE \
-            -H "Content-Type: application/json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-               "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/${{ github.event.pull_request.number }}/labels/kokoro:run"
+            "${{ github.event.issue.url }}/labels/kokoro:run"
