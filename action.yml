@@ -1,0 +1,16 @@
+name: 'gVisor build action'
+description: 'Generic gVisor build container'
+inputs:
+  command:
+  target:
+    description: 'Bazel build command & targets'
+    required: false
+    default: 'build //...'
+outputs:
+  results:
+    description: 'Bazel result URL'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - bazel ${{ inputs.target }}
