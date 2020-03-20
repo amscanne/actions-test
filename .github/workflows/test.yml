@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Add commit comment
         run: |
-                jq -nc '{"body": "labels detected: ${{ join(github.event.pull_request.labels.*.name, ",") $}}"}' | \
+          jq -nc '{"body": "labels detected: ${{ join(github.event.pull_request.labels.*.name, ",") $}}"}' | \
           curl -sL  -X POST -d @- \
             -H "Content-Type: application/json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
