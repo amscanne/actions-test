@@ -6,11 +6,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     name: Test
-    #if: contains(github.event.pull_request.labels.*.name, 'kokoro:run')
+    if: contains(github.event.pull_request.labels.*.name, 'kokoro:run')
     steps:
       - name: Add commit comment
+        env:
+          labels: ${{ join(github.event.pull_request.labels.*.name, ',') }}
         run: |
-          jq -nc '{"body": "labels detected: ${{ join(github.event.pull_request.labels.*.name, ",") $}}"}' | \
+          jq -nc "{\"body\": \"labels detected: $labels\"}" | \
           curl -sL  -X POST -d @- \
             -H "Content-Type: application/json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
