@@ -21,7 +21,7 @@ jobs:
         uses: ./
         with:
           target: "help"
-  test:
+  matrix:
     runs-on: ${{ matrix.os }}
     name: Matrix
     strategy:
