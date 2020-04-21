@@ -4,5 +4,5 @@ contact_links:
     url: https://github.community/
     about: Please ask and answer questions here.
   - name: GitHub Security Bug Bounty
-    url: mailto:adin@scannell.ca
-    about: Please report security vulnerabilities here.
+    url: https://github.com/google/gvisor/blob/master/SECURITY.md
+    about: Please report security vulnerabilities using the process described here.
