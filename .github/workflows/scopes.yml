@@ -1,0 +1,10 @@
+name: Scopes
+on: [pull_request, push]
+jobs:
+  scopes:
+    runs-on: ubuntu-latest
+    name: Scopes
+    steps:
+      - name: Check
+        run: |
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/github-actions -I
