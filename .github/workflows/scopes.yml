@@ -7,4 +7,4 @@ jobs:
     steps:
       - name: Check
         run: |
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/github-actions -I
+          curl -vv -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com -I
